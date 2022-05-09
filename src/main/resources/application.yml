@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/springboot_demo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://xanthine.i234.me:94/BNS?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     username: root
-    password: a819603315
+    password: 19941020
   mvc:
     format:
       date: yyyy-MM-dd
@@ -12,12 +12,12 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${file-upload-path}
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/,classpath:/public/,file:${file-upload-path}
 server:
   servlet:
     encoding:
       charset: utf-8
-  port: 8081
+  port: 8080
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml, classpath:/mybatis/mapper/extend/*.xml
