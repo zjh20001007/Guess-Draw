@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://xanthine.i234.me:94/BNS?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://127.0.0.1:3306/draw_guess?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     username: root
-    password: 19941020
+    password: hhxxttxs1015
   mvc:
     format:
       date: yyyy-MM-dd
