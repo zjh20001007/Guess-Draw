@@ -11,6 +11,8 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.UserService;
 import com.example.mybatisplus.model.domain.User;
 
+import java.util.List;
+
 
 /**
  *
@@ -44,6 +46,18 @@ public class UserController {
         user.setHig(0);
         userService.save(user);
         return JsonResponse.success(null);
+    }
+
+
+    /**
+     * 描述：根据Id 查询
+     *
+     */
+    @RequestMapping("/rank")
+    @ResponseBody
+    public JsonResponse rank()throws Exception {
+        List<User> users = userService.getRank();
+        return JsonResponse.success(users);
     }
 }
 

@@ -3,6 +3,8 @@ package com.example.mybatisplus.mapper;
 import com.example.mybatisplus.model.domain.Picture;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface PictureMapper extends BaseMapper<Picture> {
 
+    List<Picture> getRank();
 }

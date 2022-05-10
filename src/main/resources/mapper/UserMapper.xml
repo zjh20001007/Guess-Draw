@@ -10,5 +10,7 @@
         <result column="pic_url" property="picUrl" />
         <result column="hig" property="hig" />
     </resultMap>
-
+    <select id="getRank" resultType="java.util.Map">
+        select * from user order by hig desc limit 100
+    </select>
 </mapper>
