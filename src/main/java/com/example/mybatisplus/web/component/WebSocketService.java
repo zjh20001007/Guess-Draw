@@ -125,8 +125,33 @@ public class WebSocketService {
 
 
     @OnClose
-    public void onClose(Session session) {
+    public void onClose(String roomId, String userId,Session session) {
+        this.exitRoom(roomId,userId);
         System.out.println("onClose");
+    }
+
+    /**
+     * 退出房间
+     *
+     * @param roomId
+     * @param userId
+     */
+    public void exitRoom(String roomId, String userId) {
+        ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
+        if(room.keySet().size() == 1){//只剩余一个人，解除房间
+            room.remove(room.get(userId));
+            roomList.remove(room);
+        }else {//还剩余多人，删除退出该房间的人
+            room.remove(room.get(userId));
+            for (String item : room.keySet()) {
+                System.out.println(userId + "退出房间");
+                Map<String, Object> map = new HashMap<>();
+                map.put("name", userId);
+                map.put("status", "退出房间");
+                //广播退出信息
+                room.get(item).sendMessage(map);
+            }
+        }
     }
 
     @OnError
