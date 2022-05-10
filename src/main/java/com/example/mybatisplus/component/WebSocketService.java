@@ -2,6 +2,10 @@ package com.example.mybatisplus.component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.mybatisplus.model.domain.User;
+import com.example.mybatisplus.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -23,6 +27,11 @@ public class WebSocketService {
     // 与某个客户端的连接会话，需要通过他来给客户端发送消息
     private Session session;
 
+
+    @Autowired
+    private UserService userService;
+
+
     @OnOpen
     public void onOpen(@PathParam("roomId") String roomId, @PathParam("userId") String userId, Session session) {
         System.out.println("opening...");
@@ -38,25 +47,32 @@ public class WebSocketService {
         System.out.println(message);
         JSONObject jsonObject = JSON.parseObject(message);
         if (1 == jsonObject.getInteger("state")) {
+
             //当前题目
             String title = jsonObject.getString("title");
             //用户输入的消息内容
             String mes = jsonObject.getString("message");
             //服务器返回的加密内容
             String ans;
+            String userName;
 
+            //查找该userId的用户
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.eq("id", userId);
+            User user = userService.getById(userService.getOne(wrapper).getId());
 
             //message加密
             char[] mesArray = mes.toCharArray();
             if (mes.equals(title)) {//用户猜图正确
-                ans = userId+"答对了";
-                userId = "系统";
+                ans = "用户" + user.getName() + "答对了";
+                userName = "系统";
             } else {//用户猜图不正确
                 for (int i = 0; i < mesArray.length; i++) {
                     if (title.contains(mesArray[i] + "")) {
                         mesArray[i] = '*';
                     }
                 }
+                userName = user.getName();
                 ans = String.valueOf(mesArray);
             }
 
@@ -64,11 +80,12 @@ public class WebSocketService {
             ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
             Map<String, Object> map = new HashMap<>();
             map.put("message", ans);
-            map.put("userId", userId);
+            map.put("name", userName);
+            map.put("pic", user.getPicUrl());
             for (String item : room.keySet()) {
                 room.get(item).sendMessage(map);
             }
-        } else if (2 == jsonObject.getInteger("state")) {
+        } else if (2 == jsonObject.getInteger("state")) {//画图信息
             jsonObject.remove("state");
             //广播给所有该房间的客户端
             ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
@@ -109,14 +126,19 @@ public class WebSocketService {
             room.put(userId, this);
             roomList.put(roomId, room);
         } else {
+            //查找该userId的用户
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.eq("id", userId);
+            User user = userService.getById(userService.getOne(wrapper).getId());
+
             // 房间已存在，直接添加用户到相应的房间
             ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
             room.put(userId, this);
             //发送消息给房间内的其他人，通知他们user已经进入房间
             for (String item : room.keySet()) {
-                System.out.println(item + "进入房间");
+                System.out.println("用户" + user.getName() + "进入房间");
                 Map<String, Object> map = new HashMap<>();
-                map.put("name", userId);
+                map.put("name", user.getName());
                 map.put("status", "进入房间");
                 //传递个人信息
                 room.get(item).sendMessage(map);
@@ -126,7 +148,7 @@ public class WebSocketService {
 
 
     @OnClose
-    public void onClose( @PathParam("roomId") String roomId, @PathParam("userId") String userId, Session session) {
+    public void onClose(@PathParam("roomId") String roomId, @PathParam("userId") String userId, Session session) {
         this.exitRoom(roomId, userId);
         System.out.println("onClose");
     }
@@ -143,11 +165,16 @@ public class WebSocketService {
             room.remove(room.get(userId));
             roomList.remove(room);
         } else {//还剩余多人，删除退出该房间的人
+            //查找该userId的用户
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.eq("id", userId);
+            User user = userService.getById(userService.getOne(wrapper).getId());
+
             room.remove(room.get(userId));
             for (String item : room.keySet()) {
-                System.out.println(userId + "退出房间");
+                System.out.println("用户" + user.getName() + "退出房间");
                 Map<String, Object> map = new HashMap<>();
-                map.put("name", userId);
+                map.put("name", user.getName());
                 map.put("status", "退出房间");
                 //广播退出信息
                 room.get(item).sendMessage(map);
