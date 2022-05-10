@@ -1,4 +1,4 @@
-package com.example.mybatisplus.web.component;
+package com.example.mybatisplus.component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ServerEndpoint(value = "/websocket/{roomId}/{userId}")
 @Component
+@ServerEndpoint("/websocket/{roomId}/{userId}")
 public class WebSocketService {
 
     private static SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//创建时间格式对象
@@ -49,7 +49,8 @@ public class WebSocketService {
             //message加密
             char[] mesArray = mes.toCharArray();
             if (mes.equals(title)) {//用户猜图正确
-                ans = "答对了";
+                ans = userId+"答对了";
+                userId = "系统";
             } else {//用户猜图不正确
                 for (int i = 0; i < mesArray.length; i++) {
                     if (title.contains(mesArray[i] + "")) {
@@ -125,7 +126,7 @@ public class WebSocketService {
 
 
     @OnClose
-    public void onClose(String roomId, String userId, Session session) {
+    public void onClose( @PathParam("roomId") String roomId, @PathParam("userId") String userId, Session session) {
         this.exitRoom(roomId, userId);
         System.out.println("onClose");
     }
@@ -154,8 +155,4 @@ public class WebSocketService {
         }
     }
 
-    @OnError
-    public void onError(Throwable t) {
-        System.out.print("onError");
-    }
 }
