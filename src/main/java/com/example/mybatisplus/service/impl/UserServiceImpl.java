@@ -30,4 +30,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         List<User> users = userMapper.getRank();
         return users;
     }
+
+    @Override
+    public Integer getMyRank(String userId) {
+        return userMapper.getMyRank(userId);
+
+    }
 }
