@@ -37,7 +37,7 @@ public class WebSocketService {
 
         System.out.println(message);
         JSONObject jsonObject = JSON.parseObject(message);
-        if(1 == jsonObject.getInteger("state")){
+        if (1 == jsonObject.getInteger("state")) {
             //当前题目
             String title = jsonObject.getString("title");
             //用户输入的消息内容
@@ -48,11 +48,11 @@ public class WebSocketService {
 
             //message加密
             char[] mesArray = mes.toCharArray();
-            if(mes.equals(title)){//用户猜图正确
+            if (mes.equals(title)) {//用户猜图正确
                 ans = "答对了";
-            }else{//用户猜图不正确
-                for(int i=0;i<mesArray.length;i++){
-                    if(title.contains(mesArray[i]+"")){
+            } else {//用户猜图不正确
+                for (int i = 0; i < mesArray.length; i++) {
+                    if (title.contains(mesArray[i] + "")) {
                         mesArray[i] = '*';
                     }
                 }
@@ -67,7 +67,7 @@ public class WebSocketService {
             for (String item : room.keySet()) {
                 room.get(item).sendMessage(map);
             }
-        }else if(2 == jsonObject.getInteger("state")){
+        } else if (2 == jsonObject.getInteger("state")) {
             jsonObject.remove("state");
             //广播给所有该房间的客户端
             ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
@@ -125,8 +125,8 @@ public class WebSocketService {
 
 
     @OnClose
-    public void onClose(String roomId, String userId,Session session) {
-        this.exitRoom(roomId,userId);
+    public void onClose(String roomId, String userId, Session session) {
+        this.exitRoom(roomId, userId);
         System.out.println("onClose");
     }
 
@@ -138,10 +138,10 @@ public class WebSocketService {
      */
     public void exitRoom(String roomId, String userId) {
         ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
-        if(room.keySet().size() == 1){//只剩余一个人，解除房间
+        if (room.keySet().size() == 1) {//只剩余一个人，解除房间
             room.remove(room.get(userId));
             roomList.remove(room);
-        }else {//还剩余多人，删除退出该房间的人
+        } else {//还剩余多人，删除退出该房间的人
             room.remove(room.get(userId));
             for (String item : room.keySet()) {
                 System.out.println(userId + "退出房间");
