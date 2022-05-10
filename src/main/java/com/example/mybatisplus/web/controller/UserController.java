@@ -41,6 +41,7 @@ public class UserController {
         user.setName(jsonObject.getString("nickName"));
         user.setPicUrl(jsonObject.getString("avatarUrl"));
         user.setOpenid(jsonObject.getString("openid"));
+        user.setHig(0);
         userService.save(user);
         return JsonResponse.success(null);
     }

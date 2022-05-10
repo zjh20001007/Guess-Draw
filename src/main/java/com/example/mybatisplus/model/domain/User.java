@@ -39,8 +39,6 @@ public class User extends Model<User> {
 
     private String picUrl;
 
-    //创建的初始值为0
-    @TableId(value = "0")
     private Integer hig;
 
 
