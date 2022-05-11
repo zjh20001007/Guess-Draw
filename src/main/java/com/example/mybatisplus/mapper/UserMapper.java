@@ -17,5 +17,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     List<User> getRank();
 
-    Integer getMyRank(String userId);
+    Integer getMyRank(Long userId);
 }

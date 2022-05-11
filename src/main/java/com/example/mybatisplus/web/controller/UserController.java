@@ -54,7 +54,7 @@ public class UserController {
      */
     @RequestMapping("/rank/{userId}")
     @ResponseBody
-    public JsonResponse rank(@PathVariable String userId) throws Exception {
+    public JsonResponse rank(@PathVariable Long userId) throws Exception {
         List<User> users = userService.getRank();
         Map<String,Map<User, Integer>> finalMap = new HashMap<>();
         Map<User, Integer> rankMap = new HashMap<>();
@@ -77,7 +77,6 @@ public class UserController {
 
         Map<User, Integer> myRankMap = new HashMap<>();
         User myself = userService.getById(userId);
-        Integer myRank = userService.getMyRank(userId);
         myRankMap.put(myself, userService.getMyRank(userId));
         finalMap.put("myRank",myRankMap);
         System.out.println(finalMap);

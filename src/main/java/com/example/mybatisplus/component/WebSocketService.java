@@ -23,17 +23,20 @@ public class WebSocketService {
 
     private static SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//创建时间格式对象
     //创建房间的集合，使用ConcurrentHashMap是为了保证线程安全，HashMap在多线程的情况下会出现问题
-    private static ConcurrentHashMap<String, ConcurrentHashMap<String, WebSocketService>> roomList = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Long, ConcurrentHashMap<User, WebSocketService>> roomList = new ConcurrentHashMap<>();
     // 与某个客户端的连接会话，需要通过他来给客户端发送消息
     private Session session;
 
+    private static UserService userService;
 
     @Autowired
-    private UserService userService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @OnOpen
-    public void onOpen(@PathParam("roomId") String roomId, @PathParam("userId") String userId, Session session) {
+    public void onOpen(@PathParam("roomId") Long roomId, @PathParam("userId") Long userId, Session session) {
         System.out.println("opening...");
         this.session = session;
         this.joinRoom(roomId, userId);
@@ -42,9 +45,8 @@ public class WebSocketService {
 
     //消息类型：1--聊天内容，2--图画内容
     @OnMessage
-    public void onMessage(String message, @PathParam("roomId") String roomId, @PathParam("userId") String userId, Session session) throws IOException {
+    public void onMessage(String message, @PathParam("roomId") Long roomId, @PathParam("userId") Long userId, Session session) throws IOException {
 
-        System.out.println(message);
         JSONObject jsonObject = JSON.parseObject(message);
         if (1 == jsonObject.getInteger("state")) {
 
@@ -57,9 +59,7 @@ public class WebSocketService {
             String userName;
 
             //查找该userId的用户
-            QueryWrapper<User> wrapper = new QueryWrapper<>();
-            wrapper.eq("id", userId);
-            User user = userService.getById(userService.getOne(wrapper).getId());
+            User user = userService.getById(userId);
 
             //message加密
             char[] mesArray = mes.toCharArray();
@@ -77,19 +77,19 @@ public class WebSocketService {
             }
 
             //广播给所有该房间的客户端
-            ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
+            ConcurrentHashMap<User, WebSocketService> room = roomList.get(roomId);
             Map<String, Object> map = new HashMap<>();
             map.put("message", ans);
             map.put("name", userName);
             map.put("pic", user.getPicUrl());
-            for (String item : room.keySet()) {
+            for (User item : room.keySet()) {
                 room.get(item).sendMessage(map);
             }
         } else if (2 == jsonObject.getInteger("state")) {//画图信息
             jsonObject.remove("state");
             //广播给所有该房间的客户端
-            ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
-            for (String item : room.keySet()) {
+            ConcurrentHashMap<User, WebSocketService> room = roomList.get(roomId);
+            for (User item : room.keySet()) {
                 room.get(item).sendMessage(jsonObject);
             }
         }
@@ -117,25 +117,22 @@ public class WebSocketService {
      * @param roomId
      * @param userId
      */
-    public void joinRoom(String roomId, String userId) {
+    public void joinRoom(Long roomId, Long userId) {
+
+        //查找该userId的用户
+        User user = userService.getById(userId);
 
         if (!roomList.containsKey(roomId)) {
             // 创建房间不存在时，创建房间
-            ConcurrentHashMap<String, WebSocketService> room = new ConcurrentHashMap<>();
+            ConcurrentHashMap<User, WebSocketService> room = new ConcurrentHashMap<>();
             // 添加用户
-            room.put(userId, this);
+            room.put(user, this);
             roomList.put(roomId, room);
-        } else {
-            //查找该userId的用户
-            QueryWrapper<User> wrapper = new QueryWrapper<>();
-            wrapper.eq("id", userId);
-            User user = userService.getById(userService.getOne(wrapper).getId());
-
-            // 房间已存在，直接添加用户到相应的房间
-            ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
-            room.put(userId, this);
+        } else {// 房间已存在，直接添加用户到相应的房间
+            ConcurrentHashMap<User, WebSocketService> room = roomList.get(roomId);
+            room.put(user, this);
             //发送消息给房间内的其他人，通知他们user已经进入房间
-            for (String item : room.keySet()) {
+            for (User item : room.keySet()) {
                 System.out.println("用户" + user.getName() + "进入房间");
                 Map<String, Object> map = new HashMap<>();
                 map.put("name", user.getName());
@@ -148,7 +145,7 @@ public class WebSocketService {
 
 
     @OnClose
-    public void onClose(@PathParam("roomId") String roomId, @PathParam("userId") String userId, Session session) {
+    public void onClose(@PathParam("roomId") Long roomId, @PathParam("userId") Long userId, Session session) {
         this.exitRoom(roomId, userId);
         System.out.println("onClose");
     }
@@ -159,19 +156,17 @@ public class WebSocketService {
      * @param roomId
      * @param userId
      */
-    public void exitRoom(String roomId, String userId) {
-        ConcurrentHashMap<String, WebSocketService> room = roomList.get(roomId);
+    public void exitRoom(Long roomId, Long userId) {
+        //查找该userId的用户
+        User user = userService.getById(userId);
+
+        ConcurrentHashMap<User, WebSocketService> room = roomList.get(roomId);
         if (room.keySet().size() == 1) {//只剩余一个人，解除房间
-            room.remove(room.get(userId));
+            room.remove(room.get(user));
             roomList.remove(room);
         } else {//还剩余多人，删除退出该房间的人
-            //查找该userId的用户
-            QueryWrapper<User> wrapper = new QueryWrapper<>();
-            wrapper.eq("id", userId);
-            User user = userService.getById(userService.getOne(wrapper).getId());
-
-            room.remove(room.get(userId));
-            for (String item : room.keySet()) {
+            room.remove(room.get(user));
+            for (User item : room.keySet()) {
                 System.out.println("用户" + user.getName() + "退出房间");
                 Map<String, Object> map = new HashMap<>();
                 map.put("name", user.getName());
