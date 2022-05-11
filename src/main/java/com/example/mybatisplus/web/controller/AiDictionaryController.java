@@ -21,7 +21,7 @@ import com.example.mybatisplus.model.domain.AiDictionary;
  * @version v1.0
  */
 @Controller
-@RequestMapping("/api/aiDictionary")
+@RequestMapping("/api/ aiDictionary")
 public class AiDictionaryController {
 
     private final Logger logger = LoggerFactory.getLogger( AiDictionaryController.class );

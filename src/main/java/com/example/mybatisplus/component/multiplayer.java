@@ -2,7 +2,6 @@ package com.example.mybatisplus.component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.model.domain.User;
 import com.example.mybatisplus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +17,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-@ServerEndpoint("/websocket/{roomId}/{userId}")
-public class WebSocketService {
+@ServerEndpoint("/websocket/multiplayer/{roomId}/{userId}")
+public class multiplayer {
 
     private static SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//创建时间格式对象
     //创建房间的集合，使用ConcurrentHashMap是为了保证线程安全，HashMap在多线程的情况下会出现问题
-    private static ConcurrentHashMap<Long, ConcurrentHashMap<User, WebSocketService>> roomList = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Long, ConcurrentHashMap<User, multiplayer>> roomList = new ConcurrentHashMap<>();
     // 与某个客户端的连接会话，需要通过他来给客户端发送消息
     private Session session;
 
@@ -77,7 +76,7 @@ public class WebSocketService {
             }
 
             //广播给所有该房间的客户端
-            ConcurrentHashMap<User, WebSocketService> room = roomList.get(roomId);
+            ConcurrentHashMap<User, multiplayer> room = roomList.get(roomId);
             Map<String, Object> map = new HashMap<>();
             map.put("message", ans);
             map.put("name", userName);
@@ -88,7 +87,7 @@ public class WebSocketService {
         } else if (2 == jsonObject.getInteger("state")) {//画图信息
             jsonObject.remove("state");
             //广播给所有该房间的客户端
-            ConcurrentHashMap<User, WebSocketService> room = roomList.get(roomId);
+            ConcurrentHashMap<User, multiplayer> room = roomList.get(roomId);
             for (User item : room.keySet()) {
                 room.get(item).sendMessage(jsonObject);
             }
@@ -124,12 +123,12 @@ public class WebSocketService {
 
         if (!roomList.containsKey(roomId)) {
             // 创建房间不存在时，创建房间
-            ConcurrentHashMap<User, WebSocketService> room = new ConcurrentHashMap<>();
+            ConcurrentHashMap<User, multiplayer> room = new ConcurrentHashMap<>();
             // 添加用户
             room.put(user, this);
             roomList.put(roomId, room);
         } else {// 房间已存在，直接添加用户到相应的房间
-            ConcurrentHashMap<User, WebSocketService> room = roomList.get(roomId);
+            ConcurrentHashMap<User, multiplayer> room = roomList.get(roomId);
             room.put(user, this);
             //发送消息给房间内的其他人，通知他们user已经进入房间
             for (User item : room.keySet()) {
@@ -160,7 +159,7 @@ public class WebSocketService {
         //查找该userId的用户
         User user = userService.getById(userId);
 
-        ConcurrentHashMap<User, WebSocketService> room = roomList.get(roomId);
+        ConcurrentHashMap<User, multiplayer> room = roomList.get(roomId);
         if (room.keySet().size() == 1) {//只剩余一个人，解除房间
             room.remove(room.get(user));
             roomList.remove(room);

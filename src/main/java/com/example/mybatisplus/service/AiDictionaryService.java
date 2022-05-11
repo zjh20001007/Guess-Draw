@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AiDictionaryService extends IService<AiDictionary> {
 
+    AiDictionary selectWord(String str);
 }

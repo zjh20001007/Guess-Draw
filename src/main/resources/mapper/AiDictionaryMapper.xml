@@ -7,5 +7,7 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
     </resultMap>
-
+    <select id="selectWord" resultMap="BaseResultMap">
+        SELECT * FROM ai_dictionary where name not in (#{str}) ORDER BY rand() LIMIT 1;
+    </select>
 </mapper>
