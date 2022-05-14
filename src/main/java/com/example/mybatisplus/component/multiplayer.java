@@ -2,7 +2,12 @@ package com.example.mybatisplus.component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.mybatisplus.model.domain.AiDictionary;
+import com.example.mybatisplus.model.domain.MultiplayerDictionary;
+import com.example.mybatisplus.model.domain.Picture;
 import com.example.mybatisplus.model.domain.User;
+import com.example.mybatisplus.service.AiDictionaryService;
+import com.example.mybatisplus.service.MultiplayerDictionaryService;
 import com.example.mybatisplus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,13 +17,17 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @ServerEndpoint("/websocket/multiplayer/{roomId}/{userId}")
 public class multiplayer {
+
+    private static List<String> wordList = new ArrayList<>();
 
     private static SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//创建时间格式对象
     //创建房间的集合，使用ConcurrentHashMap是为了保证线程安全，HashMap在多线程的情况下会出现问题
@@ -33,6 +42,13 @@ public class multiplayer {
         this.userService = userService;
     }
 
+    private static MultiplayerDictionaryService multiplayerDictionaryService;
+
+    @Autowired
+    public void setMultiplayerDictionaryService(MultiplayerDictionaryService multiplayerDictionaryService) {
+        this.multiplayerDictionaryService = multiplayerDictionaryService;
+    }
+
 
     @OnOpen
     public void onOpen(@PathParam("roomId") Long roomId, @PathParam("userId") Long userId, Session session) {
@@ -42,7 +58,7 @@ public class multiplayer {
     }
 
 
-    //消息类型：1--聊天内容，2--图画内容
+    //消息类型：1--聊天内容，2--图画内容，3--开始游戏，4--游戏结束
     @OnMessage
     public void onMessage(String message, @PathParam("roomId") Long roomId, @PathParam("userId") Long userId, Session session) throws IOException {
 
@@ -91,6 +107,34 @@ public class multiplayer {
             for (User item : room.keySet()) {
                 room.get(item).sendMessage(jsonObject);
             }
+        }else if(3 == jsonObject.getInteger("state")){
+            String str = "";
+            if(wordList.size() > 0){
+                //出词
+                str = "("+wordList.get(0);
+                for(int i=1;i<wordList.size();i++){
+                    str = str + "," + wordList.get(i);
+                }
+                str += ")";
+
+            }
+
+            List<MultiplayerDictionary> multiplayerDictionaries = multiplayerDictionaryService.selectWord(str);
+            Map<String,Object> map = new HashMap<>();
+            List<String> prompts = new ArrayList<>();
+
+            for(MultiplayerDictionary multiplayerDictionary:multiplayerDictionaries){
+                wordList.add(multiplayerDictionary.getName());
+                //提示列表
+                String[] prompt = multiplayerDictionary.getPrompt().split(",");
+                for(String pro:prompt){
+                    prompts.add(pro);
+                }
+                map.put(multiplayerDictionary.getName(),prompts);
+            }
+            this.sendMessage(map);
+        }else{
+            wordList.clear();
         }
 
     }
@@ -146,6 +190,7 @@ public class multiplayer {
     @OnClose
     public void onClose(@PathParam("roomId") Long roomId, @PathParam("userId") Long userId, Session session) {
         this.exitRoom(roomId, userId);
+        wordList.clear();
         System.out.println("onClose");
     }
 

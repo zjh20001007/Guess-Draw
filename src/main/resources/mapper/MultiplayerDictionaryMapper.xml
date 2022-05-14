@@ -8,5 +8,8 @@
         <result column="name" property="name" />
         <result column="prompt" property="prompt" />
     </resultMap>
+    <select id="selectWord" resultMap="BaseResultMap">
+        SELECT * FROM Multiplayer_dictionary where name not in (#{str}) ORDER BY rand() LIMIT 3;
+    </select>
 
 </mapper>
