@@ -47,7 +47,7 @@ public class UserController {
         //小程序端发送过来的code
         String result = "";
         //微信服务器接口
-        String url="https://api.weixin.qq.com/sns/jscode2session?appid=wxcc590e55c7f5082c&secret=318392582974e18ce5783af1b307cae7&js_code=";
+        String url="https://api.weixin.qq.com/sns/jscode2session?appid=wxb06b52c78c391e39&secret=860aa603e344c2aa7024308e6f48d5fa&js_code=";
         url+=code+"&grant_type=authorization_code";
         BufferedReader in = null;
         try {
@@ -91,9 +91,9 @@ public class UserController {
             User user = new User();
             user.setOpenid(openid);
             user.setHig(0);
-
             userService.save(user);
         }
+        System.out.println(openid);
         return jsonObject;
     }
 
