@@ -43,7 +43,7 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/login")
-    public JSONObject login(@Param("code") String code){
+    public JSONObject login(@RequestParam("code") String code){
         //小程序端发送过来的code
         String result = "";
         //微信服务器接口
