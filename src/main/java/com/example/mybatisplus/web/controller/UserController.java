@@ -1,6 +1,8 @@
 package com.example.mybatisplus.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -12,6 +14,11 @@ import com.example.mybatisplus.service.UserService;
 import com.example.mybatisplus.model.domain.User;
 
 import javax.websocket.server.PathParam;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.sql.Wrapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +40,63 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+    @ResponseBody
+    @RequestMapping("/login")
+    public JSONObject login(@Param("code") String code){
+        //小程序端发送过来的code
+        String result = "";
+        //微信服务器接口
+        String url="https://api.weixin.qq.com/sns/jscode2session?appid=wxcc590e55c7f5082c&secret=318392582974e18ce5783af1b307cae7&js_code=";
+        url+=code+"&grant_type=authorization_code";
+        BufferedReader in = null;
+        try {
+            URL realUrl = new URL(url);
+            // 打开和URL之间的连接
+            URLConnection connection = realUrl.openConnection();
+            // 设置通用的请求属性
+            connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("user-agent",
+                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            // 建立实际的连接
+            connection.connect();
+            // 定义 BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(
+                    connection.getInputStream(), "UTF-8"));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            System.out.println("发送GET请求出现异常！" + e);
+            e.printStackTrace();
+        }
+        // 使用finally块来关闭输入流
+        finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        String openid = (String)jsonObject.get("openid");
+        QueryWrapper<User> wrapper = new QueryWrapper<User>();
+        wrapper.eq("openid",openid);
+        //不存在该openid用户则进行添加
+        if(null == userService.getOne(wrapper)){
+            User user = new User();
+            user.setOpenid(openid);
+            user.setHig(0);
+
+            userService.save(user);
+        }
+        return jsonObject;
+    }
+
     /**
      * 描述:创建User
      */
@@ -42,9 +106,7 @@ public class UserController {
         User user = new User();
         user.setName(jsonObject.getString("nickName"));
         user.setPicUrl(jsonObject.getString("avatarUrl"));
-        user.setOpenid(jsonObject.getString("openid"));
-        user.setHig(0);
-        userService.save(user);
+        userService.saveOrUpdate(user);
         return JsonResponse.success(null);
     }
 
