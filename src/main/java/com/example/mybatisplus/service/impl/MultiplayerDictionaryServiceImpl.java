@@ -23,8 +23,8 @@ public class MultiplayerDictionaryServiceImpl extends ServiceImpl<MultiplayerDic
     @Autowired
     MultiplayerDictionaryMapper multiplayerDictionaryMapper;
     @Override
-    public List<MultiplayerDictionary> selectWord(String str) {
+    public List<MultiplayerDictionary> selectWord(List<String> list) {
 
-        return multiplayerDictionaryMapper.selectWord(str);
+        return multiplayerDictionaryMapper.selectWord(list);
     }
 }

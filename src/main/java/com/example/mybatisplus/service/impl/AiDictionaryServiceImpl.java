@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -21,8 +23,10 @@ public class AiDictionaryServiceImpl extends ServiceImpl<AiDictionaryMapper, AiD
     @Autowired
     AiDictionaryMapper aiDictionaryMapper;
     @Override
-    public AiDictionary selectWord(String str) {
-
-        return aiDictionaryMapper.selectWord(str);
+    public AiDictionary selectWord(List<String> list) {
+        if(list.size() == 0){
+            return aiDictionaryMapper.selectWord(null);
+        }
+        return aiDictionaryMapper.selectWord(list);
     }
 }

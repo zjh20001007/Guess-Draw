@@ -9,5 +9,11 @@
         <result column="url" property="url" />
         <result column="title" property="title" />
     </resultMap>
+    <select id="getRank" resultMap="BaseResultMap">
+        select * from picture where user_id = #{userId}
+    </select>
+    <select id="getMyPic" resultMap="BaseResultMap">
+        select * from picture where user_id = #{userId}
+    </select>
 
 </mapper>

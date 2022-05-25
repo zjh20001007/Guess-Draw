@@ -3,6 +3,8 @@ package com.example.mybatisplus.service;
 import com.example.mybatisplus.model.domain.AiDictionary;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AiDictionaryService extends IService<AiDictionary> {
 
-    AiDictionary selectWord(String str);
+    AiDictionary selectWord(List<String> list);
 }

@@ -16,4 +16,6 @@ import java.util.List;
 public interface PictureMapper extends BaseMapper<Picture> {
 
     List<Picture> getRank();
+
+    List<Picture> getMyPic(Long userId);
 }

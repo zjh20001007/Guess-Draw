@@ -16,4 +16,5 @@ import java.util.List;
 public interface PictureService extends IService<Picture> {
 
 
+    List<Picture> getMyPic(Long userId);
 }

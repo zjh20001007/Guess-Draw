@@ -17,5 +17,5 @@ public interface UserService extends IService<User> {
 
     List<User> getRank();
 
-    Integer getMyRank(Long userId);
+    Integer getMyRank(String openid);
 }

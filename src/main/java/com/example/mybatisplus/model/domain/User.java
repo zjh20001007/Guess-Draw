@@ -43,6 +43,7 @@ public class User extends Model<User> {
     private Integer hig;
 
 
+
     @Override
     protected Serializable pkVal() {
         return this.id;

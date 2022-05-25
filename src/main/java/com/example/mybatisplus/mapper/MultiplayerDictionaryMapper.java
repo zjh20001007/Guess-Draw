@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface MultiplayerDictionaryMapper extends BaseMapper<MultiplayerDictionary> {
 
-    List<MultiplayerDictionary> selectWord(String str);
+    List<MultiplayerDictionary> selectWord(List<String> list);
 }

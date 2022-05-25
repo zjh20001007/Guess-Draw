@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface MultiplayerDictionaryService extends IService<MultiplayerDictionary> {
 
-    List<MultiplayerDictionary> selectWord(String str);
+    List<MultiplayerDictionary> selectWord(List<String> list);
 }

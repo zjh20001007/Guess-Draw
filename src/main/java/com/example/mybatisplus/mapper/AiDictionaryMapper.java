@@ -3,6 +3,8 @@ package com.example.mybatisplus.mapper;
 import com.example.mybatisplus.model.domain.AiDictionary;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,5 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface AiDictionaryMapper extends BaseMapper<AiDictionary> {
 
-    AiDictionary selectWord(String str);
+    AiDictionary selectWord(List<String> list);
 }

@@ -31,8 +31,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Integer getMyRank(Long userId) {
-        return userMapper.getMyRank(userId);
+    public Integer getMyRank(String openid) {
+        return userMapper.getMyRank(openid);
 
     }
 }

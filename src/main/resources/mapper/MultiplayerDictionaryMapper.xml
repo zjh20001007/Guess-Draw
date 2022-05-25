@@ -9,7 +9,14 @@
         <result column="prompt" property="prompt" />
     </resultMap>
     <select id="selectWord" resultMap="BaseResultMap">
-        SELECT * FROM Multiplayer_dictionary where name not in (#{str}) ORDER BY rand() LIMIT 3;
+        SELECT * FROM Multiplayer_dictionary
+        <if test="list != null">
+            where name not in
+            <foreach collection="list" item="kk" open="(" separator="," close=")">
+               #{kk}
+            </foreach>
+        </if>
+        ORDER BY rand() LIMIT 8
     </select>
 
 </mapper>

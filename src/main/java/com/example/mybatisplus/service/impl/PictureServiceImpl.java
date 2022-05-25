@@ -24,4 +24,9 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture> impl
     PictureMapper pictureMapper;
 
 
+    @Override
+    public List<Picture> getMyPic(Long userId) {
+        List<Picture> pictures = pictureMapper.getMyPic(userId);
+        return pictures;
+    }
 }
