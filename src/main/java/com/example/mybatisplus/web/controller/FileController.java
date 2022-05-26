@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +87,14 @@ public class FileController {
 //        System.out.println("user_pic:"+AIuser_picUrl.get(openId));
 
 
-
+        String path = "./file"+map.get("url");
+        System.out.println("文件路径："+path);
+        File file1 = new File(path);
+        if (file!=null){
+            System.out.println(file1.delete());
+        }else{
+            System.out.println("没找到文件");
+        }
 
         String ans = "鸡蛋";
         System.out.println("答案是:"+ans);

@@ -204,8 +204,8 @@ public class multiplayer {
                 for(User item:roomList.get(roomId).keySet()){
                     roomList.get(roomId).get(item).sendMessage(map);
                 }
-                FileController.removePic(user1.getOpenid());
-                deleteFile(picUrl);
+
+
             }else {
                 Map<String, Object> map = new HashMap<>();
                 map.put("status", "error");
@@ -224,8 +224,12 @@ public class multiplayer {
                 map1.put("nickName", item.getName());
                 map1.put("avatarUrl", item.getPicUrl());
                 map.put(String.valueOf(i),map1);
+
                 i++;
                 userScore.put(item,0);
+
+                deleteFile(FileController.getPic(item.getOpenid()));
+                FileController.removePic(item.getOpenid());
             }
 
             for(User item:roomList.get(roomId).keySet()){
@@ -290,7 +294,12 @@ public class multiplayer {
             userScore.put(user,0);
             user_score.put(roomId,userScore);
 
-
+            Map<String, Object> joinMap = new HashMap<>();
+            joinMap.put("status","加入");
+            joinMap.put("message","用户" + user.getName() + "进入房间");
+            for (User item : roomList.get(roomId).keySet()) {
+                roomList.get(roomId).get(item).sendMessage(joinMap);
+            }
             LinkedHashMap<User, multiplayer> room = roomList.get(roomId);
             room.put(user, this);
 
@@ -345,6 +354,14 @@ public class multiplayer {
             userScore.remove(user);
             user_score.put(roomId,userScore);
             room.remove(user);
+
+            Map<String, Object> exitMap = new HashMap<>();
+            exitMap.put("status","退出");
+            exitMap.put("message","用户" + user.getName() + "退出房间");
+            for (User item : room.keySet()) {
+                room.get(item).sendMessage(exitMap);
+            }
+
             System.out.println("用户" + user.getName() + "退出房间");
             //发送消息给房间内的其他人加入房间的user的信息
             Map<String, Object> mapToMe = new HashMap<>();
@@ -377,6 +394,7 @@ public class multiplayer {
         }
     }
     public void deleteFile(String path) throws IOException {
+        path = "./file"+path;
         System.out.println("文件路径："+path);
         File file = new File(path);
         if (file!=null){
