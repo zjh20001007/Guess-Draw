@@ -79,34 +79,12 @@ public class FileController {
 
     @ApiOperation(value = "文件上传", notes = "文件上传")
     @RequestMapping(value = "/AIupload", method = RequestMethod.POST)
-    public JsonResponse AIupload(@RequestParam("file") MultipartFile file,@RequestParam("openId") String openId, HttpServletRequest request) throws IOException {
+    public JsonResponse AIupload(@RequestParam("file") MultipartFile file,@RequestParam("openId") String openId,@RequestParam("title") String title, HttpServletRequest request) throws IOException {
         System.out.println("file:"+openId);
         Map<String, String> map = new HashMap();
         map = fileService.upload(file);
 
 //        System.out.println("user_pic:"+AIuser_picUrl.get(openId));
-
-
-        String path = "./file"+map.get("url");
-        System.out.println("文件路径："+path);
-        File file1 = new File(path);
-        if (file!=null){
-            System.out.println(file1.delete());
-        }else{
-            System.out.println("没找到文件");
-        }
-
-        String ans = "鸡蛋";
-        System.out.println("答案是:"+ans);
-        return JsonResponse.success(ans);
-    }
-
-    @ApiOperation(value = "文件上传", notes = "文件上传")
-    @RequestMapping(value = "/AIuploadPic", method = RequestMethod.POST)
-    public JsonResponse AIuploadPic(@RequestParam("file") MultipartFile file,@RequestParam("openId") String openId,@RequestParam("title") String title, HttpServletRequest request) throws IOException {
-        System.out.println("file:"+openId);
-        Map<String, String> map = new HashMap();
-        map = fileService.upload(file);
 
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("openid",openId);
@@ -114,13 +92,12 @@ public class FileController {
         //先保存上一条作品记录
         Picture picture = new Picture();
         picture.setUserId(userId);
-        picture.setUrl(map.get("url"));
+        picture.setUrl(map.get("url").substring(1));
         picture.setTitle(title);
         pictureService.save(picture);
 
         return JsonResponse.success(null);
     }
-
 
     private static String suffix(String fileName) {
         int i = fileName.lastIndexOf('.');

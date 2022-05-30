@@ -305,7 +305,7 @@ public class UserController {
             wordList = user_wordList.get(openId);
             //刷新记录
             if(wordList.size()-1>user.getHig()){
-                user.setHig(wordList.size());
+                user.setHig(wordList.size()-1);
                 userService.saveOrUpdate(user);
             }
             System.out.println("结束前："+user_wordList);
