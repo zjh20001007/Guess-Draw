@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/Cover/Cover",
+    "pages/Guess/Guess",
+    "pages/List/List",
+    "pages/draw/draw",
+    "pages/ChooseWord/ChooseWord",
+    "pages/index/index",
+    "pages/Invite/Invite",
+    "pages/OverAndScore/OverAndScore",
+    "pages/ShowWord/ShowWord",
+    "pages/DrawAndGuess/DrawAndGuess",
+    "pages/Fail/Fail",
+    "pages/MyPic/MyPic",
+    "pages/Rank/Rank",
+    "pages/ai-classifier/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ADD8E6",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "plugins": {
+    "tfjsPlugin": {
+      "version": "0.1.0",
+      "provider": "wx6afed118d9e81df9"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<view class="title" style="height:30%;margin-left: 13%;">
+  <image src="../../resource/picture/GAMEOVER.png" style="width: 575rpx; height: 240rpx; display: inline-block; box-sizing: border-box"></image>
+</view>
+<!-- <view wx:for="{{info}}" class="paihang" style="display: flex;justify-content: center;">
+  <view style="margin-right:60%;">
+    <image src="{{item.imageUrl}}" style="height: 110rpx;width: 110rpx;border-radius: 50%;box-sizing: border-box;"></image>
+  </view>
+  <view style="position: absolute; margin-top: 3%; margin-left: 10%; width: 450rpx; height: 80rpx; display: block; box-sizing: border-box; left: 148rpx; top: 249rpx">
+    <text style="font-size: 120%;">{{item.name}}：{{item.score}}分</text>
+  </view>
+</view> -->
+<view style="width: 750rpx; height: 959rpx; display: block; box-sizing: border-box">
+  <view wx:for="{{info}}" wx:for-index="index" style="display: flex;justify-content: center;margin-right:20%;">
+    <view id="msg-{{index}}">
+      <image src="{{item.imageUrl}}" style="width: 70rpx;height: 70rpx;border-radius: 50%;margin-top: a1rpx;margin-bottom: 1rpx;margin-left: 15rpx;"></image>
+      <view style="position:relative;"><text style="position: relative; left: 94rpx; top: -71rpx;font-size:large;text-overflow:ellipsis; word-wrap:break-word;">{{item.name}}: {{item.score}}分</text></view>
+    </view>
+  </view>
+</view>
+
+
+<view style="position: absolute; width: 337rpx; height: 78rpx; display: block; box-sizing: border-box; left: 0rpx; top: 1159rpx">
+  <button bindtap="return" type="primary" style="background-color: #f6a615; position: absolute; left: 200rpx; top: 60rpx">返回主界面</button>
+</view>

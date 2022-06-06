@@ -1,0 +1,47 @@
+<view class="header">
+        <view class="avatar">
+            <open-data class="user-avatar" type="userAvatarUrl" wx:if="{{canIUseAvatar}}"></open-data>
+            <image class="user-avatar" src="{{userInfo.headimgurl}}" wx:else></image>
+        </view>
+        <view class="topic">
+            <view class="topic-title">倒计时：{{second1}}s</view>
+            <view class="tip">题目：{{title1}}</view>
+            <!-- <view bind:tap="changeTopic" class="refresh">
+                <image src="../../resource/picture/refresh.png"></image>
+            </view> -->
+        </view>
+    </view>
+    <view class="content">
+        <view class="canvas-area">
+            <canvas bindtouchend="touchEnd" bindtouchmove="touchMove" bindtouchstart="touchStart" canvasId="my-canvas" disableScroll="true"></canvas>
+        </view>
+        <view class="tools" style="width: 713rpx; height: 139rpx; display: block; box-sizing: border-box">
+            <view class="option" style="width: 708rpx; height: 80rpx; display: block; box-sizing: border-box">
+                <view class="color" style="width: 439rpx; height: 80rpx; display: block; box-sizing: border-box">
+                    <view class="title" style="color: white;">画笔：</view>
+                    <scroll-view class="color-list" scrollX="true" style="width: 354rpx; height: 99rpx; display: block; box-sizing: border-box">
+                        <view class="color-item-box" wx:for="{{colorArr}}" wx:key="item">
+                            <view bind:tap="changeColor" class="color-item" data-color="{{item}}" style="background-color:{{item}}; "></view>
+                            <view class="selector" style="background-color:{{item}};" wx:if="{{pen.color==item}}"></view>
+                        </view>
+                    </scroll-view>
+                </view>
+                <view bind:tap="clearRect" class="clear">
+                    <image class="icon" src="../../resource/picture/clear.png"></image>
+                    <text style="color: white;">清空</text>
+                </view>
+                <view bind:tap="chooseEraser" class="eraser">
+                    <image class="icon" src="../../resource/picture/{{eraser.icon_name}}"></image>
+                    <text style="color:{{eraser.color}};">橡皮</text>
+                </view>
+            </view>
+            
+        </view>
+        <!-- <form bind:submit="doSaveImage" reportSubmit="true">
+            <button class="submit" bindtap="getC" style="width: 406rpx; height: 111rpx; display: block; box-sizing: border-box; left: -8rpx; top: -12rpx; position: relative">生成画作</button>
+        </form> -->
+    </view>
+    <view class="text">
+        我猜这是{{result}}
+    </view>
+    

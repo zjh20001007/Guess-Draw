@@ -1,0 +1,67 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="title">
+    <image src="../../resource/picture/T3.png" mode="widthFix"></image>
+  </view>
+  <view class="content">
+    <view  class="AIGuess">
+      <button style="width: 80vw; height: 30vw; background-color: #f6a615; position: relative; left: 3rpx; top: 8rpx" bindtap="ShowWord">
+        <image style="width: 40%;height: 100%;position: absolute;left: 0%;" src="../../resource/picture/hh.png" ></image>
+        <view style="position: absolute;left: 55%;top: 40%;font-size: 120%;color: white;">AI猜图</view>
+      </button>
+    </view>
+    <view style="color: #ADD8E6;">sssssssssss</view>
+    <view  class="MannyPeopleGuess">
+      <button style="width:80vw;height: 30vw;background-color: #f6a615;" bindtap="popup">
+        <image style="width: 40%;height: 100%;position: absolute;left: 0%;" src="../../resource/picture/sb.png" ></image>
+        <view style="position: absolute;left: 55%;top: 40%;font-size: 120%;color: white;">多人猜图</view>
+      </button>
+    </view>
+  </view>
+  <view style="color: #ADD8E6;">sssssssssss</view>
+  <view class="otherFunction">
+    <view>
+      <button style="position: absolute; left: 75rpx; width: 263rpx; background-color: #f6a615; height: 160rpx; display: block; box-sizing: border-box; top: 767rpx" bindtap="Rank">
+        <view style="font-size: 85%; position: absolute; top: 52rpx; color: white; left: 57rpx; width: 153rpx; height: 52rpx; display: block; box-sizing: border-box">AI排行榜</view>
+      </button>
+    </view>
+    <view>
+      <button style="position: absolute; left: 415rpx; width: 263rpx; background-color: #f6a615; height: 160rpx; display: block; box-sizing: border-box; top: 765rpx" bindtap="MyPic">
+        <view style="font-size: 85%; position: absolute; top: 57rpx; color: white; left: 64rpx; width: 143rpx; height: 57rpx; display: block; box-sizing: border-box">我的画作</view>
+      </button>
+    </view>
+  </view>
+</view>
+
+<page-container 
+  show="{{show}}"
+  round="{{round}}"
+  overlay="{{overlay}}"
+  duration="{{duration}}"
+  position="{{position}}"
+  close-on-slide-down="{{false}}"
+  bindbeforeenter="onBeforeEnter"
+  bindenter="onEnter"
+  bindafterenter="onAfterEnter"
+  bindbeforeleave="onBeforeLeave"
+  bindleave="onLeave"
+  bindafterleave="onAfterLeave"
+  bindclickoverlay="onClickOverlay"
+  custom-style="{{customStyle}}"
+  overlay-style="{{overlayStyle}}"
+>
+  <view class="detail-page" style="background-color: #ADD8E6; width: 750rpx; height: 1189rpx; display: flex; box-sizing: border-box">
+    <view>
+      <button type="primary" bindtap="goToInvite" style="width: 436rpx; height: 104rpx; display: block; box-sizing: border-box; left: -83rpx; top: -317rpx; position: relative; background-color: #f6a615">创建房间</button>
+      <button type="primary" bindtap="doRoomID" style="width: 436rpx; height: 104rpx; display: block; box-sizing: border-box; left: -83rpx; top: -265rpx; position: relative; background-color: #f6a615">加入房间</button>
+    </view>
+  </view>
+</page-container>
+
+<modal hidden="{{hiddenmodalput}}" title="请输入房间号" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
+
+<input type='text' bindinput='bindKeyInput' placeholder="{{placeHolder}}" value="{{inputValue}}" auto-focus/>
+
+</modal>
+
+

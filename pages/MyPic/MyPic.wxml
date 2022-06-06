@@ -1,0 +1,21 @@
+<template name="course-card">
+  <view class="course-card">
+    <view>
+      <image src="http://192.168.123.205:8080{{course.url}}" mode="widthFix"></image>
+    </view>
+    <view>{{course.title}}</view>
+  </view>
+</template>
+
+
+<view class="body">
+  <view class="list-wrap">
+    <scroll-view scroll-y="true" class="list">
+      <view class="list-scroll-view">
+        <block wx:for="{{list}}" wx:key="{{i}}" wx:for-index="i" wx:for-item="course">
+          <template is="course-card" data="{{course}}" />
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+</view>

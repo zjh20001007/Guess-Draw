@@ -1,0 +1,56 @@
+<view class="chooseWord">
+  <image src="../../resource/picture/chooseB.png" style="width: 746rpx; height: 727rpx; display: inline-block; box-sizing: border-box"></image>
+</view>
+
+<view style="width: 750rpx; height: 0rpx; display: block; box-sizing: border-box">
+  <text style="position: absolute; font-size: 75%; left: 151rpx; top: 37rpx">{{second}}s</text>
+  <text style="position: absolute; font-size: 75%; left: 211rpx; top: 36rpx">选词阶段</text>
+  <text style="position: absolute; font-size: 130%; left: 293rpx; top: 128rpx">选词绘画</text>
+  <text style="position: absolute; font-size: 80%; color: #DCDCDC; top: 193rpx; left: 260rpx">每局可以换一次哦~</text>
+  <button bindtap="choosen1" style="position: absolute; left: 99rpx; top: 260rpx; border-radius: 13%; width: 260rpx; height: 88rpx; display: block; box-sizing: border-box; background-color: {{tempColor1}}; font-size: smaller; line-height: 30rpx; text-align: center">
+    <text style="position: absolute; left: 83rpx; top: 30rpx">{{words.word0}}</text>
+  </button>
+  <button bindtap="choosen2" style="position: absolute; left: 97rpx; top: 390rpx; border-radius: 13%; width: 261rpx; height: 90rpx; display: block; box-sizing: border-box; background-color: {{tempColor2}}; font-size: smaller">
+    <text style="position: absolute; left: 83rpx; top: 29rpx">{{words.word1}}</text>
+  </button>
+  <button bindtap="choosen3" style="position: absolute; left: 401rpx; top: 390rpx; border-radius: 13%; width: 261rpx; height: 90rpx; display: block; box-sizing: border-box; background-color: {{tempColor3}}; font-size: smaller"><text style="position: absolute; left: 83rpx; top: 30rpx">{{words.word2}}</text></button>
+  <button bindtap="choosen4" style="position: absolute; left: 402rpx; top: 258rpx; border-radius: 13%; width: 261rpx; height: 90rpx; display: block; box-sizing: border-box; background-color: {{tempColor4}}; font-size: smaller">
+    <text style="position: absolute; left: 83rpx; top: 30rpx">{{words.word3}}</text>
+  </button>
+  <button bindtap="change" style="position: relative; background-color: white; left: -2rpx; top: -241rpx; width: 165rpx; height: 122rpx; display: block; box-sizing: border-box">
+    <image src="../../resource/picture/change.png" style="width: 44rpx; height: 41rpx; display: inline-block; box-sizing: border-box"></image>
+  </button>
+  <text style="position: absolute; font-size: 80%; color: #DCDCDC; top: 553rpx; left: 340rpx">换一换</text>
+</view>
+
+<!-- <view class="InvitePeople">
+  <text style="color: #ADD8E6;">ss</text>
+  <image src="{{avatarUrls.at1}}" style="width: 97rpx;border-radius: 50%;height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at2}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at3}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at4}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at5}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at6}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+</view> -->
+
+<scroll-view scroll-y="true" style="height: 551rpx; width: 677rpx; display: block; box-sizing: border-box" scroll-into-view="{{ toView }}">
+  <view wx:for="{{message}}" wx:for-index="index" >
+    <view id="msg-{{index}}">
+    <image style="width: 50rpx;height: 50rpx;border-radius: 50%;margin-top: a1rpx;margin-bottom: 1rpx;margin-left: 15rpx;" src="{{item.head}}"></image>
+    <view style="position:relative;"><text style="position: relative; left: 94rpx; top: -71rpx;font-size: small;text-overflow:ellipsis; word-wrap:break-word;">{{item.name}}: {{item.msg}}</text></view>
+    </view>
+  </view>
+</scroll-view>
+
+
+<view  class="chatting" style="width: 136rpx; height: -256rpx; display: block; box-sizing: content-box;margin-bottom: 0%;">
+  <input bindinput='bindKeyInput' style="position: absolute; border: 1px solid black; width: 530rpx; height: 57rpx; display: block; box-sizing: border-box; left: 20rpx; top: 1315rpx; font-size: 70%; border-radius: 5px" class="input1" type="text" placeholder=" {{placeHolder}}"  value="{{inputValue}}"></input>
+  <button bindtap="sent" class='btn1'  style="width: 155rpx; height: 52rpx; display: flex; box-sizing: border-box; left: 574rpx; top: 1295rpx; position: absolute">
+    <image class='btnImg' src='../../resource/picture/send.png' style="width: 277rpx; height: 52rpx; display: block; box-sizing: border-box; left: -10rpx; top: -3rpx"></image>
+ </button>
+</view>

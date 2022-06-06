@@ -1,0 +1,17 @@
+<!--pages/Fail/Fail.wxml-->
+<view class="header">
+        <view class="topic">
+            <view class="topic-title">倒计时：0s</view>
+        </view>
+</view>
+<view class="content">
+  <view class="number">人工智能未能猜出</view>
+  <view class="tip">{{title1}}</view>
+        <!-- <form bind:submit="doSaveImage" reportSubmit="true">
+            <button class="submit" bindtap="getC" style="width: 406rpx; height: 111rpx; display: block; box-sizing: border-box; left: -8rpx; top: -12rpx; position: relative">生成画作</button>
+        </form> -->
+  <view style="position: absolute; width: 337rpx; height: 78rpx; display: block; box-sizing: border-box; left: 250rpx; top: 1000rpx">
+      <button type="primary" bindtap="ShowWord" style="width: 436rpx; height: 104rpx; display: block; box-sizing: border-box; left: -83rpx; top: -317rpx; position: relative; background-color: #f6a615">再来一次</button>
+      <button type="primary" bindtap="returnHome" style="width: 436rpx; height: 104rpx; display: block; box-sizing: border-box; left: -83rpx; top: -265rpx; position: relative; background-color: #f6a615">返回主界面</button>
+  </view>
+</view>

@@ -1,0 +1,12 @@
+<view class="title">
+    <image src="../../resource/picture/T3.png" mode="widthFix" style="width: 750rpx; height: 765rpx; display: inline-block; box-sizing: content-box"></image>
+</view>
+
+<view style="position: absolute;">
+  <image style="transform: translateX(10px);" src="../../resource/picture/wangzai.png" style="width: 739rpx; height: 722rpx; display: inline-block; box-sizing: border-box"></image>
+</view>
+
+
+<view>
+  <button class='goodbutton' bindtap="login" hover-class="hover" style="position: relative; left: 0rpx; top: 584rpx">开始游戏</button>
+</view>

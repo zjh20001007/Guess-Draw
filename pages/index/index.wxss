@@ -1,0 +1,16 @@
+/**index.wxss**/
+.container {
+  padding: 0 26rpx;
+  box-sizing: border-box;
+}
+page{
+  background-color: #ADD8E6;
+}
+.detail-page {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

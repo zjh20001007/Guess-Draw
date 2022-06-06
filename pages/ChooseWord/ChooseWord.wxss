@@ -1,0 +1,27 @@
+/* pages/ChooseWord/ChooseWord.wxss */
+Page {
+  background-color:#ADD8E6 ;
+}
+
+.btn1 {
+  width: 80%;
+  margin-top: 20rpx;
+  background-color: white;
+  color: white;
+  border-radius: 98rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnImg {
+  margin-right: 0rpx;
+  width: 46rpx;
+  height: 46rpx;
+}
+
+.btn1::after {
+  border-radius: 98rpx;
+  border: 0; 
+}

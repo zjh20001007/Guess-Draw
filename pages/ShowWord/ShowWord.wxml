@@ -1,0 +1,16 @@
+<!--pages/ShowWord/ShowWord.wxml-->
+<view class="header">
+        <view class="topic">
+            <view class="topic-title">倒计时：25s</view>
+        </view>
+</view>
+<view class="content">
+  <view class="number">第{{cnt}}题</view>
+  <view class="tip">{{title1}}</view>
+        <!-- <form bind:submit="doSaveImage" reportSubmit="true">
+            <button class="submit" bindtap="getC" style="width: 406rpx; height: 111rpx; display: block; box-sizing: border-box; left: -8rpx; top: -12rpx; position: relative">生成画作</button>
+        </form> -->
+</view>
+
+    
+

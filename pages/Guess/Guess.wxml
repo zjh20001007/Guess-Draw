@@ -1,0 +1,57 @@
+<view>
+  <image src="../../resource/picture/chooseB.png" style="width: 750rpx; height: 720rpx; display: inline-block; box-sizing: border-box;display: inherit;"></image>
+</view>
+<view style="position: absolute; left: 110rpx; top: 118rpx; width: 525rpx; height: 528rpx; display: block; box-sizing: border-box">
+    <image src="{{painting}}" style="width: 523rpx; height: 530rpx; display: inline-block; box-sizing: border-box"></image>
+</view>
+<view style="color:#ADD8E6 ;">ss</view>
+<view>
+  <text class="countd" style="font-size: small; position: absolute; left: 143rpx; top: 33rpx">{{second}}s</text>
+  <text class="countd" style="font-size: small; position: absolute; left: 256rpx; top: 675rpx">提示：{{tip}}</text>
+  <text class="countd" style="font-size: small; position: absolute; left: 210rpx; top: 33rpx">剩余：{{restNum}}</text>
+  <text class="countd" style="font-size: small; position: absolute; left: 363rpx; top: 33rpx">作者：{{drawer}}</text>
+</view>
+<!-- <view class="InvitePeople">
+  <text style="color: #ADD8E6;">sss</text>
+  <image src="{{avatarUrls.at1}}" style="width: 97rpx;border-radius: 50%;height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at2}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at3}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at4}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at5}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at6}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+</view> -->
+
+<scroll-view scroll-y="true" style="height: 528rpx; width: 677rpx; display: block; box-sizing: border-box" scroll-into-view="{{ toView }}">
+  <view wx:for="{{message}}" wx:for-index="index" >
+    <view id="msg-{{index}}">
+    <image style="width: 50rpx;height: 50rpx;border-radius: 50%;margin-top: a1rpx;margin-bottom: 1rpx;margin-left: 15rpx;" src="{{item.head}}"></image>
+    <view style="position:relative;"><text style="position: relative; left: 94rpx; top: -71rpx;font-size: small;text-overflow:ellipsis; word-wrap:break-word;">{{item.name}}: {{item.msg}}</text></view>
+    </view>
+  </view>
+</scroll-view>
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showM}}"></view>
+<view class="modal-dialog" wx:if="{{showM}}">
+  <view class="modal-title" style="width: 540rpx; height: 85rpx; display: block; box-sizing: border-box">正确答案:{{title}}</view>
+  <view class="modal-content" style="width: 540rpx; height: 453rpx; display: block; box-sizing: border-box">
+    <view class="modal-input">
+      <image src="{{painting}}" style="width: 474rpx; height: 390rpx; display: block; box-sizing: border-box"></image>
+    </view>
+  </view>
+  <view class="modal-footer">
+    <text style="margin-left: 25%;width: 525rpx; height: 85rpx; display: block; box-sizing: border-box"> {{second11}}s后自动进入下一轮</text>
+  </view>
+</view>
+
+
+
+<view  class="chatting" style="width: 136rpx; height: -256rpx; display: block; box-sizing: content-box;margin-bottom: 0%;">
+  <input bindinput='bindKeyInput' style="position: absolute; border: 1px solid black; width: 530rpx; height: 57rpx; display: block; box-sizing: border-box; left: 22rpx; top: 1318rpx; font-size: 70%; border-radius: 5px" class="input1" type="text" placeholder=" {{placeHolder}}"  value="{{inputValue}}"></input>
+  <button bindtap="sent" class='btn1'  style="width: 155rpx; height: 52rpx; display: flex; box-sizing: border-box; left: 572rpx; top: 1304rpx; position: absolute">
+    <image class='btnImg' src='../../resource/picture/send.png' style="width: 277rpx; height: 52rpx; display: block; box-sizing: border-box; left: -10rpx; top: -3rpx"></image>
+ </button>
+</view>

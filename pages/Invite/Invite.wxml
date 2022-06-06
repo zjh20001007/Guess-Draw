@@ -1,0 +1,53 @@
+<!--pages/Invite/Invite.wxml-->
+<view class="rule" style="width: 750rpx; height: 748rpx; display: block; box-sizing: border-box">
+  <image style="position: absolute;" src="../../resource/picture/rr2.png" style="width: 748rpx; height: 741rpx; display: inline-block; box-sizing: border-box;display: inherit;">
+  </image>
+  
+  <text style="position: absolute; font-size: 75%; left: 95rpx; top: 18rpx">房间号：{{RoomID}}</text>
+  <view style="position: absolute; left: 235rpx; top: 73rpx; width: 258rpx; height: 54rpx; display: block; font-size: 110%; box-sizing: border-box">--游戏规则--</view>
+  <view style="position: absolute; left: 68rpx; top: 158rpx; width: 544rpx; height: 74rpx; display: block; font-size: 80%; box-sizing: border-box">1.加入玩家不少于两人即可开始游戏。</view>
+  <view style="position: absolute; left: 68rpx; top: 223rpx; width: 544rpx; height: 74rpx; display: block; font-size: 80%; box-sizing: border-box">2.每人选词开始绘画</view>
+  <view style="position: absolute; left: 69rpx; top: 297rpx; width: 610rpx; height: 74rpx; display: block; font-size: 80%;box-sizing: border-box">3.答题者根据答对的先后顺序获得不同分数。</view>
+  <view style="position: absolute; left: 68rpx; top: 368rpx; width: 544rpx; height: 74rpx; display: block; font-size: 80%; box-sizing: border-box">4.最后根据最终分进行排名</view>
+  <view style="position: absolute; left: 269rpx; top: 481rpx; width: 192rpx; height: 55rpx; display: block; font-size: 110%; box-sizing: border-box">准备阶段</view>
+  <button open-type="share" style="position: absolute; background-color: #48D1CC; left: 68rpx; top: 568rpx; width: 230rpx; height: 104rpx; display: block; box-sizing: border-box; border-radius: 11%" class="invite">
+    <view style="position: absolute; left: 78rpx; top: 30rpx">邀请</view>
+  </button>
+  <button style="position: absolute; background-color: #FFD700; left: 361rpx; top: 568rpx; width: 305rpx; height: 104rpx; display: block; box-sizing: border-box; border-radius: 11%" class="invite" bindtap="startGame">
+    <view style="position: absolute; left: 100rpx; top: 30rpx">开始游戏</view>
+  </button>
+</view>
+<view style="position: absolute; top: 10rpx; width: 64rpx; height: 66rpx; display: block; box-sizing: border-box; left: 605rpx">
+    <image src="../../resource/picture/return.png" style="width: 40rpx; height: 50rpx; display: inline-block; box-sizing: border-box" bindtap="returnHome"></image>
+  </view>
+<view class="InvitePeople">
+  <text style="color: #ADD8E6;">ss</text>
+  <image src="{{avatarUrls.at1}}" style="width: 97rpx;border-radius: 50%;height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at2}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at3}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at4}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at5}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+  <text style="color: #ADD8E6;">s</text>
+  <image src="{{avatarUrls.at6}}" style="width: 97rpx;border-radius: 50%; height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+</view>
+
+<scroll-view scroll-y="true" style="height: 456rpx; width: 628rpx; display: block; box-sizing: border-box" scroll-into-view="{{ toView }}">
+  <view wx:for="{{message}}" wx:for-index="index" >
+    <view id="msg-{{index}}">
+    <image style="width: 50rpx;height: 50rpx;border-radius: 50%;margin-top: a1rpx;margin-bottom: 1rpx;margin-left: 15rpx;" src="{{item.head}}"></image>
+    <view style="position:relative;"><text style="position: relative; left: 94rpx; top: -71rpx;font-size: small;text-overflow:ellipsis; word-wrap:break-word;">{{item.name}}: {{item.msg}}</text></view>
+    </view>
+  </view>
+</scroll-view>
+
+
+<view  class="chatting" style="width: 136rpx; height: -256rpx; display: block; box-sizing: content-box;margin-bottom: 0%;">
+  <input bindinput='bindKeyInput' style="position: absolute; border: 1px solid black; width: 530rpx; height: 57rpx; display: block; box-sizing: border-box; left: 15rpx; top: 1329rpx; font-size: 70%; border-radius: 5px" class="input1" type="text" placeholder=" {{placeHolder}}"  value="{{inputValue}}"></input>
+  <button bindtap="sent" class='btn1'  style="width: 155rpx; height: 52rpx; display: flex; box-sizing: border-box; left: 567rpx; top: 1309rpx; position: absolute">
+    <image class='btnImg' src='../../resource/picture/send.png' style="width: 277rpx; height: 52rpx; display: block; box-sizing: border-box; left: -10rpx; top: -3rpx"></image>
+ </button>
+</view>

@@ -1,0 +1,299 @@
+page {
+    background-color: #ADD8E6;
+}
+
+.container {
+    position: relative;
+    color: white;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+}
+
+.header {
+    width: 710rpx;
+    height: 100rpx;
+    padding-left: 20rpx;
+}
+
+.header .avatar {
+    padding: 10rpx;
+    height: 80rpx;
+    width: 80rpx;
+    float: left;
+}
+
+.header .avatar .user-avatar {
+    display: flex;
+    border-radius: 50%;
+    overflow: hidden;
+    height: 80rpx;
+    width: 80rpx;
+}
+
+.header .topic {
+    float: left;
+    width: 400rpx;
+    font-size: 22rpx;
+    line-height: 40rpx;
+    padding: 10rpx 0rpx;
+    padding-left: 20rpx;
+    position: relative;
+}
+
+.header .topic .topic-title {
+    color: white;
+    height: 40rpx;
+}
+
+.header .topic .tip {
+    color: white;
+    height: 40rpx;
+}
+
+.header .topic .refresh {
+    position: absolute;
+    width: 100rpx;
+    height: 100rpx;
+    right: 0;
+    top: 0;
+}
+
+.header .topic .refresh image {
+    margin-top: 32rpx;
+    margin-left: 32rpx;
+    width: 36rpx;
+    height: 36rpx;
+}
+
+.content {
+    width: 100%;
+    overflow: hidden;
+}
+
+.content .canvas-area {
+    margin: 10rpx 20rpx 20rpx 20rpx;
+    background-color: #fff;
+}
+
+.content .canvas-area canvas {
+    width: 710rpx;
+    height: 710rpx;
+}
+
+.content .tools {
+    margin: 0rpx 20rpx;
+    height: 235rpx;
+    width: 710rpx;
+    font-size: 28rpx;
+}
+
+.content .tools text {
+    display: block;
+    float: left;
+}
+
+.content .tools .option {
+    height: 80rpx;
+    line-height: 80rpx;
+}
+
+.content .tools .option .weight {
+    float: left;
+    width: 490rpx;
+}
+
+.content .tools .option .weight .item {
+    background-color: white;
+    border-radius: 50%;
+    float: left;
+}
+
+.content .tools .option .weight .itembox {
+    position: relative;
+    width: 80rpx;
+    height: 80rpx;
+    float: left;
+}
+
+.content .tools .option .weight .itembox .selector {
+    width: 36rpx;
+    margin-left: 22rpx;
+    height: 2rpx;
+    background-color: #fff;
+}
+
+.content .tools .option .weight .itembox .colorline {
+    position: absolute;
+    bottom: 10rpx;
+    left: 0rpx;
+}
+
+.content .tools .option .weight .title {
+    color: white;
+    float: left;
+}
+
+.content .tools .option .eraser,.content .tools .option .clear {
+    display: block;
+    width: 92rpx;
+    height: 80rpx;
+    float: right;
+}
+
+.content .tools .option .eraser {
+    margin-right: 10rpx;
+}
+
+.content .tools .option .icon {
+    width: 32rpx;
+    height: 32rpx;
+    float: left;
+    margin-top: 12px;
+}
+
+.content .tools .option .eraser text,.content .tools .option .clear text {
+    display: block;
+    float: left;
+    font-size: 24rpx;
+    width: 60rpx;
+    text-align: center;
+}
+
+.content .tools .color {
+    height: 100rpx;
+    line-height: 100rpx;
+}
+
+.content .tools .color .title {
+    width: 84rpx;
+    float: left;
+}
+
+.content .tools .color .color-list {
+    width: 626rpx;
+    height: 100rpx;
+    float: left;
+    white-space: nowrap;
+}
+
+.content .tools .color .color-list .color-item-box {
+    width: 80rpx;
+    height: 100rpx;
+    display: inline-block;
+}
+
+.content .tools .color .color-list .color-item {
+    box-sizing: border-box;
+    margin: 25rpx 15rpx;
+    margin-bottom: 6rpx;
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.content .tools .color .color-list .selector {
+    width: 50rpx;
+    height: 2rpx;
+    margin-left: 15rpx;
+    background-color: #fff;
+}
+
+.content .tools .color .color-list .cur {
+    border-bottom: 4rpx solid white;
+}
+
+.content .color-tip {
+    color: white;
+    height: 32rpx;
+    float: right;
+    margin-right: 7rpx;
+    font-size: 22rpx;
+    line-height: 32rpx;
+}
+
+.submit {
+    color: white;
+    width: 710rpx;
+    height: 90rpx;
+    margin: 0 auto;
+    line-height: 90rpx;
+    text-align: center;
+    background-color: #FF1C6C;
+    border-radius: 45rpx;
+    margin-bottom: 20rpx;
+}
+
+.choose {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.choose .modal {
+    color: #4C4C4C;
+    color: black;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: #fff;
+    width: 600rpx;
+    height: 368rpx;
+    border-radius: 10rpx;
+}
+
+.choose .tishi {
+    height: 96rpx;
+    line-height: 96rpx;
+    font-size: 28rpx;
+    font-weight: bold;
+    margin-left: 22rpx;
+}
+
+.choose .choose-box {
+    margin-left: 22rpx;
+    padding: 14rpx 8rpx 10rpx;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.choose .choose-box .item {
+    height: 54rpx;
+    float: left;
+    padding: 0 24rpx;
+    display: block;
+    line-height: 54rpx;
+    font-size: 28rpx;
+    background-color: #F3F3F3;
+    border-radius: 8rpx;
+    margin-right: 20rpx;
+    margin-bottom: 20rpx;
+}
+
+.choose .modal .option {
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    font-size: 28rpx;
+}
+
+.choose .modal .option .btn {
+    width: 50%;
+    float: left;
+}
+
+.choose .close {
+    position: absolute;
+    right: 20rpx;
+    top: 20rpx;
+    width: 70rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    text-align: center;
+}

@@ -1,0 +1,23 @@
+<template name="course-card">
+  <view class="course-card">
+    <view>
+      <text class="text">{{course.rank}}</text>
+      <image src="{{course.picUrl}}" style="width: 97rpx;border-radius: 50%;height: 99rpx; display: inline-block; box-sizing: border-box"></image>
+      <text class="text">{{course.name}}</text>
+      <text class="grade">{{course.hig}}张</text>
+    </view>
+  </view>
+</template>
+
+
+<view class="body">
+  <view class="list-wrap">
+    <scroll-view scroll-y="true" class="list">
+      <view class="list-scroll-view">
+        <block wx:for="{{list}}" wx:key="{{i}}" wx:for-index="i" wx:for-item="course">
+          <template is="course-card" data="{{course}}" />
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+</view>
